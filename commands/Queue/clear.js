@@ -45,7 +45,6 @@ module.exports = {
 				embeds: [
 					new MessageEmbed().setColor(ee.wrongcolor).setTitle(`${client.allEmojis.x} **Please join ${guild.me.voice.channel ? "__my__" : "a"} VoiceChannel First!**`)
 				],
-
 			})
 			if (channel.guild.me.voice.channel && channel.guild.me.voice.channel.id != channel.id) {
 				return message.reply({
@@ -78,7 +77,11 @@ module.exports = {
 				let amount = newQueue.songs.length - 2;
 				newQueue.songs = [newQueue.songs[0]];
 				message.reply({
-					content: `🗑 **Cleared the Queue and deleted ${amount} Songs!**\n> 💢 **Action by**: \`${member.user.tag}\``
+					embeds: [new MessageEmbed()
+					  .setColor(ee.color)
+					  .setTimestamp()
+					  .setTitle(`🗑 **Cleared the Queue and deleted ${amount} Songs!**`)
+					  .setFooter(`💢 Action by: ${member.user.tag}`, member.user.displayAvatarURL({dynamic: true}))]
 				})
 			} catch (e) {
 				console.log(e.stack ? e.stack : e)

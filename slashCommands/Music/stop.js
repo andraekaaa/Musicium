@@ -59,7 +59,11 @@ module.exports = {
 					await newQueue.stop()
 					//Reply with a Message
 					interaction.reply({
-						content: `⏹ **Stopped playing and left the Channel**\n> 💢 **Action by**: \`${member.user.tag}\``
+						embeds: [new MessageEmbed()
+						  .setColor(ee.color)
+						  .setTimestamp()
+						  .setTitle(`⏹ **Stopped playing and left the Channel!**`)
+						  .setFooter(`💢 Action by: ${member.user.tag}`, member.user.displayAvatarURL({dynamic: true}))]
 					})
 				}
 				if (check_if_dj(client, member, newQueue.songs[0])) {
@@ -76,7 +80,11 @@ module.exports = {
 				await newQueue.stop()
 				//Reply with a Message
 				interaction.reply({
-					content: `⏹ **Stopped playing and left the Channel**\n> 💢 **Action by**: \`${member.user.tag}\``
+					embeds: [new MessageEmbed()
+					  .setColor(ee.color)
+					  .setTimestamp()
+					  .setTitle(`⏹ **Stopped playing and left the Channel!**`)
+					  .setFooter(`💢 Action by: ${member.user.tag}`, member.user.displayAvatarURL({dynamic: true}))]
 				})
 				return
 			} catch (e) {

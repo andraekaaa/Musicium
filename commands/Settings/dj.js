@@ -21,16 +21,6 @@ module.exports = {
       //things u can directly access in an interaction!
       const {
         member,
-        channelId,
-        guildId,
-        applicationId,
-        commandName,
-        deferred,
-        replied,
-        ephemeral,
-        options,
-        id,
-        createdTimestamp
       } = message;
       const {
         guild
@@ -40,8 +30,8 @@ module.exports = {
           embeds: [new MessageEmbed()
             .setColor(ee.wrongcolor)
             .setFooter(ee.footertext, ee.footericon)
-            .setTitle(`${client.allEmojis.x} **Please add a Method+Role!**`)
-            .setDescription(`**Usage:**\n> \`${client.settings.get(message.guild.id, "prefix")}botchat <add/remove> <@Role>\``)
+            .setTitle(`${client.allEmojis.x} **Please add a __Method+Role__!**`)
+            .setDescription(`**Usage:**\n> \`${client.settings.get(message.guild.id, "prefix")}dj <add/remove> <@Role>\``)
           ],
         });
       }
@@ -51,25 +41,22 @@ module.exports = {
           embeds: [new MessageEmbed()
             .setColor(ee.wrongcolor)
             .setFooter(ee.footertext, ee.footericon)
-            .setTitle(`${client.allEmojis.x} **Please add a Method+Role!**`)
-            .setDescription(`**Usage:**\n> \`${client.settings.get(message.guild.id, "prefix")}botchat <add/remove> <@Role>\``)
+            .setTitle(`${client.allEmojis.x} **Please add a __valid Method__+Role!**`)
+            .setDescription(`**Usage:**\n> \`${client.settings.get(message.guild.id, "prefix")}dj <add/remove> <@Role>\``)
           ],
         });
       }
-      let Role = message.mentions.channels.first();
+      let Role = message.mentions.roles.first();
       if (!Role) {
         return message.reply({
           embeds: [new MessageEmbed()
             .setColor(ee.wrongcolor)
             .setFooter(ee.footertext, ee.footericon)
-            .setTitle(`${client.allEmojis.x} **Please add a Method+Role!**`)
-            .setDescription(`**Usage:**\n> \`${client.settings.get(message.guild.id, "prefix")}botchat <add/remove> <@Role>\``)
+            .setTitle(`${client.allEmojis.x} **Please add a Method+__Role__!**`)
+            .setDescription(`**Usage:**\n> \`${client.settings.get(message.guild.id, "prefix")}dj <add/remove> <@Role>\``)
           ],
         });
       }
-      client.settings.ensure(guild.id, {
-        djroles: []
-      });
       if (add_remove == "add") {
         if (client.settings.get(guild.id, "djroles").includes(Role.id)) {
           return message.reply({

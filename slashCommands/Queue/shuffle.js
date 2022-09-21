@@ -72,9 +72,14 @@ module.exports = {
 						ephemeral: true
 					});
 				}
-				await newQueue.shuffle(volume);
+				client.maps.set(`beforeshuffle-${newQueue.id}`, newQueue.songs.map(track => track).slice(1));
+        		await newQueue.shuffle();
 				interaction.reply({
-					content: `🔀 **Suffled ${newQueue.songs.length} Songs!**\n> 💢 **Action by**: \`${member.user.tag}\``
+					embeds: [new MessageEmbed()
+					  .setColor(ee.color)
+					  .setTimestamp()
+					  .setTitle(`🔀 **Suffled ${newQueue.songs.length} Songs!**`)
+					  .setFooter(`💢 Action by: ${member.user.tag}`, member.user.displayAvatarURL({dynamic: true}))]
 				})
 			} catch (e) {
 				console.log(e.stack ? e.stack : e)

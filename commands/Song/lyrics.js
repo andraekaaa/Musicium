@@ -2,11 +2,7 @@ const {
 	MessageEmbed,
 	Message
 } = require("discord.js");
-const {
-    KSoftClient
-} = require('@ksoft/api');
 const config = require(`../../botconfig/config.json`);
-const ksoft = new KSoftClient(config.ksoftapi);
 const ee = require("../../botconfig/embed.json");
 const settings = require("../../botconfig/settings.json");
 const {
@@ -68,23 +64,14 @@ module.exports = {
 					],
 
 				})
-				let embeds = [];
-				await ksoft.lyrics.get(newQueue.songs[0].name).then(
-					async track => {
-						if (!track.lyrics) return message.reply({
-							content: `${client.allEmojis.x} **No Lyrics Found!** :cry:`,
-						});
-						lyrics = track.lyrics;
-						embeds = lyricsEmbed(lyrics, newQueue.songs[0]);
-					}).catch(e => {
-					console.log(e)
-					return message.reply({
-						content: `${client.allEmojis.x} **No Lyrics Found!** :cry:\n${String(e).substr(0, 1800)}`,
-					});
-				})
-				message.reply({
-					embeds: embeds,
-				})
+				return message.reply({
+					embeds: [new MessageEmbed()
+						.setColor(ee.wrongcolor)
+						.setFooter(ee.footertext, ee.footericon)
+						.setTitle(`${client.allEmojis.x} Lyrics are disabled!`)
+						.setDescription(`**Due to legal Reasons, Lyrics are disabled and won't work for an unknown amount of time!** :cry:`)
+					],
+				});
 			} catch (e) {
 				console.log(e.stack ? e.stack : e)
 				message.reply({

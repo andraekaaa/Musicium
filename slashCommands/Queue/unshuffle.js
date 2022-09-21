@@ -9,8 +9,8 @@ const {
 	check_if_dj
 } = require("../../handlers/functions")
 module.exports = {
-	name: "replay", //the command name for the Slash Command
-	description: "Replays the current song!", //the command description for Slash Command Overview
+	name: "unshuffle", //the command name for the Slash Command
+	description: "UN-Shuffles (Mixes) The Queue", //the command description for Slash Command Overview
 	cooldown: 10,
 	requiredroles: [], //Only allow specific Users with a Role to execute a Command [OPTIONAL]
 	alloweduserids: [], //Only allow specific Users to execute a Command [OPTIONAL]
@@ -61,7 +61,6 @@ module.exports = {
 					],
 					ephemeral: true
 				})
-				let seekNumber = 0
 				if (check_if_dj(client, member, newQueue.songs[0])) {
 					return interaction.reply({
 						embeds: [new MessageEmbed()
@@ -73,12 +72,13 @@ module.exports = {
 						ephemeral: true
 					});
 				}
-				await newQueue.seek(seekNumber);
+				newQueue.songs = [newQueue.songs[0], ...client.maps.get(`beforeshuffle-${newQueue.id}`)]
+				client.maps.delete(`beforeshuffle-${newQueue.id}`);
 				interaction.reply({
 					embeds: [new MessageEmbed()
 					  .setColor(ee.color)
 					  .setTimestamp()
-					  .setTitle(`🔃 **Replaying the current Song!**`)
+					  .setTitle(`🔀 **__UN__ - Suffled ${newQueue.songs.length} Songs!**`)
 					  .setFooter(`💢 Action by: ${member.user.tag}`, member.user.displayAvatarURL({dynamic: true}))]
 				})
 			} catch (e) {

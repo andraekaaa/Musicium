@@ -85,8 +85,8 @@ module.exports = {
 						],
 					});
 				}
-				let loop = args[0]
-				if (!["off", "song", "queue"].includes(args[0]).toLowerCase()) {
+				let loop = String(args[0])
+				if (!["off", "song", "queue"].includes(loop.toLowerCase())) {
 					return message.reply({
 						embeds: [new MessageEmbed()
 							.setColor(ee.wrongcolor)
@@ -97,21 +97,33 @@ module.exports = {
 					});
 				}
 				if (loop.toLowerCase() == "off") loop = 0;
-				if (loop.toLowerCase() == "song") loop = 1;
-				if (loop.toLowerCase() == "queue") loop = 2;
+				else if (loop.toLowerCase() == "song") loop = 1;
+				else if (loop.toLowerCase() == "queue") loop = 2;
 				await newQueue.setRepeatMode(loop);
 				if (newQueue.repeatMode == 0) {
 					message.reply({
-						content: `${client.allEmojis.x} **Disabled the Loop Mode!**\n> 💢 **Action by**: \`${member.user.tag}\``
+						embeds: [new MessageEmbed()
+						  .setColor(ee.color)
+						  .setTimestamp()
+						  .setTitle(`${client.allEmojis.x} **Disabled the Loop Mode!**`)
+						  .setFooter(`💢 Action by: ${member.user.tag}`, member.user.displayAvatarURL({dynamic: true}))]
 					})
 				} else if (newQueue.repeatMode == 1) {
 					message.reply({
-						content: `🔁 **Enabled the __Song__-Loop** ||(Disabled the **Queue-Loop**)||\n> 💢 **Action by**: \`${member.user.tag}\``
-					})
+						embeds: [new MessageEmbed()
+						  .setColor(ee.color)
+						  .setTimestamp()
+						  .setTitle(`🔁 **Enabled the __Song__-Loop** ||(Disabled the **Queue-Loop**)||`)
+						  .setFooter(`💢 Action by: ${member.user.tag}`, member.user.displayAvatarURL({dynamic: true}))]
+						})
 				} else {
 					message.reply({
-						content: `🔂 **Enabled the __Queue__-Loop!** ||(Disabled the **Song-Loop**)||\n> 💢 **Action by**: \`${member.user.tag}\``
-					})
+						embeds: [new MessageEmbed()
+						  .setColor(ee.color)
+						  .setTimestamp()
+						  .setTitle(`🔂 **Enabled the __Queue__-Loop!** ||(Disabled the **Song-Loop**)||`)
+						  .setFooter(`💢 Action by: ${member.user.tag}`, member.user.displayAvatarURL({dynamic: true}))]
+						})
 				}
 			} catch (e) {
 				console.log(e.stack ? e.stack : e)
